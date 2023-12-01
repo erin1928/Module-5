@@ -44,3 +44,91 @@ d <- read_tsv(f, col_names = TRUE)  # for tab-separated files
 head(d)
 
 ```
+```{r 8, include=TRUE}
+class(d)
+d <- read_delim(f, delim = "\t", col_names = TRUE)
+head(d)
+```
+```{r 9, include=TRUE}
+require(readxl)
+f <- "~/AN588/Module_5/CPDS-1960-2014-reduced (1).xlsx"
+d <- read_excel(f, sheet = 1, col_names = TRUE)
+head(d)
+```
+
+```{r 10, include=TRUE}
+str(d)
+```
+
+```{r 11, include=TRUE}
+library(curl)
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Fall23/CPDS-1960-2014-reduced.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+```
+
+```{r 12, include=TRUE}
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Fall23/CPDS-1960-2014-reduced.txt")
+d <- read.table(f, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+head(d)
+```
+
+```{r 13, include=TRUE}
+Sys.setenv(VROOM_CONNECTION_SIZE = 131072 * 2)
+library(readr)
+f <- "https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Fall23/CPDS-1960-2014-reduced.csv"
+d <- read_csv(f, col_names = TRUE)
+```
+```{r 14, include=TRUE}
+head(d)
+```
+```{r 15, include=TRUE}
+f <- "https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Fall23/CPDS-1960-2014-reduced.txt"
+d <- read_tsv(f, col_names = TRUE)
+```
+```{r 16, include=TRUE}
+head(d)
+```
+
+```{r 17, include=TRUE}
+require(rdrop2)
+drop_auth()  # opens a browser dialog box to ask for authorization...
+drop_dir()  # lists the contents of your dropbox folder
+f <- "CPDS-1960-2014-reduced.csv"  # name of the file to read from
+f <- drop_search(f)  # searches your dropbox directory for file or directory names; this can be slow
+f <- f$path  # f$path is the location you choose from the results returned above
+d <- drop_read_csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+str(d)
+```
+
+```{r 18, include=TRUE}
+link <- "https://www.dropbox.com/scl/fi/560bh55pwv3sowbmyygsl/CPDS-1960-2014-reduced.csv?rlkey=sp4xkouegbno3fqrt65o7gb4d&dl=0"
+```
+
+```{r 19, include=TRUE}
+link <- gsub(pattern = "dl=0", replacement = "dl=1", x = link)
+d <- read.csv(link, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+str(d)
+require(repmis)
+d <- source_data(link, header = TRUE, sep = ",")  # use the same updated link to the raw data as above
+head(d)
+str(d)
+```
+
+```{r 20, include=TRUE}
+require(googledrive)
+require(googlesheets4)
+
+f <- drive_find(n_max = 30, type = "spreadsheet")  #This interactive interface will guide you through steps to link your Google Drive. The 'n_max' option will restrict the number of files retrieved to the 30 most recently-added to the linked drive. The 'type' option allows you to only search for a specific kind of file; in this case, spreadsheets (this 'type' will *not* find Excel files, only Google Sheets). It will store the results in an object called a 'dribble'.
+
+# In your dribble, find the Google Sheet you want. The first column is the
+# name, and the second is the ID for the sheet. That ID is what you need
+# to enter to read your google sheet into R (you may need to log in again
+# to access it).
+
+d <- read_sheet("1bzyH5hgif0__q6oW4zfJhxGxLKA073sv8ZYcZpAHTf4")
+head(d)
+str(d)
+```
