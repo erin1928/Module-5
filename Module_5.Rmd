@@ -1,0 +1,46 @@
+---
+title: "Module_5"
+author: "Erin Anderson"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+f <- file.choose()
+f <- "https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Fall23/Country-Data-2016.txt"
+d <- read.table(f, header = TRUE, sep = "\t", stringsAsFactors = FALSE, fill = T)
+head(d)  # lists the first 6 lines of data
+```
+
+```{r 1, include=TRUE}
+tail(d)  # shows the last 6 lines of data
+```
+
+```{r 2, include=TRUE}
+class(d)  # shows that tables are typically loaded as data frames
+```
+
+```{r 3, include=TRUE}
+d <- read.delim(f, header = TRUE, stringsAsFactors = FALSE)
+head(d)
+```
+
+```{r 4, include=TRUE}
+d <- read.table(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+```
+
+```{r 5, include=TRUE}
+d <- read.csv(f, header = TRUE, stringsAsFactors = FALSE)
+head(d)
+```
+
+```{r 6, include=TRUE}
+require(readr)
+```
+
+```{r 7, include=TRUE}
+d <- read_tsv(f, col_names = TRUE)  # for tab-separated files
+head(d)
+
+```
